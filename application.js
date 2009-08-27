@@ -15,7 +15,18 @@ $(document).ready(function() {
       return $('script[name=' + name + ']').html();
     }
 
-    $('body').append(
-      $.nano(readTemplate('test'), data) 
-    );
+
+    var url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Paris%20Hilton&callback=?";
+    $.getJSON(url, function(response) {
+        var results = response.responseData.results;
+
+        var $body = $('body');
+        for (var i in results) {
+          var result = results[i];
+          
+          var template = readTemplate('imageResult');
+          $body.append( $.nano(template, result)); 
+        }
+      });
+
 })
