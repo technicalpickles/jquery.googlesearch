@@ -13,6 +13,13 @@
 			</div>
 		</script>
 
+		<script type="text/html" defer="defer" name="videoResult">
+			<div>
+				<p>{titleNoFormatting}</p>
+				<a href="{url}"><img src="{tbUrl}"/></a>
+			</div>
+		</script>
+
                 <script type="text/javascript">
                   function readTemplate(name) {
                     return $('script[name=' + name + ']').html();
@@ -44,6 +51,21 @@
                         }
                       }
                     });
+
+                  $.googleSearch("rickroll", {
+                      type: "video",
+                      callback: function(responseData) {
+                        var results = responseData.results;
+
+                        var $container = $('#video');
+                        for (var i in results) {
+                          var result = results[i];
+
+                          var template = readTemplate('videoResult');
+                          $container.append( $.nano(template, result)); 
+                        }
+                      }
+                    });
                 </script>
 
 	</head>
@@ -54,6 +76,10 @@
 
           <h1>Image search results for Sharks</h1>
           <div id="image">
+          </div>
+
+          <h1>Video search result for rickroll</h1>
+          <div id="video">
           </div>
 	</body>
 </html>
